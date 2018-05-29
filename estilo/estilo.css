@@ -1,0 +1,78 @@
+body {
+    background-image: url("../imagem/campusifmg.jpg");
+    /* temporariamente desnecessários devido ao background-size: cover */
+        /* background-repeat: no-repeat; */
+        /* background-attachment: fixed; */
+    background-position: center;
+    background-size: cover; /* temporário | melhorar vizualização */
+    /* posicionamento do form */
+    display: grid;
+    min-height: 100vh;
+    justify-content: flex-end;
+    align-content: center;
+    margin: 0; /* temporário | importar base? */
+}
+
+/* Formulário: */
+form {
+    --tamanho-caixa: 500px;
+    --arredondamento-bordas: 4px;
+    box-sizing: border-box;
+    width: var(--tamanho-caixa);
+    padding: 16px;
+    border-radius: var(--arredondamento-bordas);
+    margin-right: 20px;
+    background-color: hsla(0, 4%, 14%, 0.5);
+}
+
+label {
+    font-size: 24px;
+    color: hsl(0, 0%, 100%);
+}
+
+input[type="text"],
+input[type="password"] {
+    font-size: 18px;
+    padding: 8px;
+    display: block;
+    border: none;
+    border-radius: var(--arredondamento-bordas);
+    width: calc(var(--tamanho-caixa) - 48px);
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover {
+    box-shadow: 0 4px 5px 0 hsla(0, 0%, 0%, 0.36);
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 16px;
+    border: none;
+    font-size: 1.2em;
+    color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 3%, 19%);
+    border-radius: var(--arredondamento-bordas);
+}
+
+input[type="submit"]:hover{
+    background-color:hsl(0, 4%, 9%);
+    transition: background-color 0.2s ease-in-out;
+}
+
+@media (max-width: 520px) {
+    body {
+        justify-content: center;
+    }
+
+    form {
+        margin: 0;
+        width: 360px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 312px;
+    }
+}
