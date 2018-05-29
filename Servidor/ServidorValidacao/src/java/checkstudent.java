@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+import Model.Aluno;
+import Services.AlunoService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.codehaus.jackson.map.ObjectMapper;
+import validators.Validator;
 
 /**
  *
@@ -19,61 +18,80 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/checkstudent"})
 public class checkstudent extends HttpServlet {
 
+    //metodo para geração do json utilizado como resposta
+    public String generateJson(Aluno x){
+        ObjectMapper mapper = new ObjectMapper();
+        if(x != null){
+            try {
+                String jsonInString = mapper.writeValueAsString(x);
+                return jsonInString;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet checkstudent</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet checkstudent at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            } catch (IOException ex) {
+                return "{\"cod\":406}";
+            }
+        }else{
+            return "{\"cod\":406}";
         }
     }
+    
+    
+    //metodo para verificar cpf dos usuários (reduzir requisições erradas ao banco de dados)
+    public int verificaCPF(String cpf[]){
+        if(cpf == null || cpf.length == 0){
+            return 422;
+        }
+        
+        if(!Validator.verificaCPF(Validator.limpaCPF(cpf[0]))){
+            return 400;
+        }
+        
+        return 200;
+    }
+    
+    
+    //verificações do campo de senha
+    public int verificaSenha(String senha[]){
+        if(senha.length == 0){
+            return 422;
+        }
+        
+        if(senha[0].length() < 6){
+            return 400;
+        }
+        return 200;
+    }
+    
+    //metodo que efetua o meio de campo valida e repassa as buscas para os respectivos services
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        
+        String cpf[] = request.getParameterValues("cpf");
+        String senha[] = request.getParameterValues("senha");
+        
+        int codCPF = verificaCPF(cpf);
+        int codSenha = verificaSenha(senha);
+        
+        String resposta = "";
+        if(codCPF == 200 && codSenha == 200){
+            //aqui podemos fazer uma requisição ao nosso AlunosServer
+            AlunoService service = new AlunoService();
+            Aluno temp = service.buscaAluno(cpf[0], senha[0]);
+            resposta = generateJson(temp);
+            
+        }else{
+            resposta = "{\"cod\":400,\"cpf\":"+codCPF+", \"senha\":"+codSenha+"}";
+        }
+        
+        
+        PrintWriter out = response.getWriter();
+        out.print(resposta);
+        out.flush();
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    //requisiç~eos tipo get pra este servlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
