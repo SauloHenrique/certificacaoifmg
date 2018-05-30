@@ -17,6 +17,7 @@ public class Documento {
     private String nomeArquivo;
     private Aluno aluno;
     private Date dataEmissao;
+    private Date dataVencimento;
     private String textoPrincipal;
     private File arquivoDisco;
     private File anexo;
@@ -44,6 +45,21 @@ public class Documento {
         this.tipoArquivo = tipoArquivo;
     }
 
+    public Documento(long id, String nomeArquivo, Aluno aluno, Date dataEmissao, Date dataVencimento, String textoPrincipal, File arquivoDisco, File anexo, String checkSum, String tipoArquivo) {
+        this.id = id;
+        this.nomeArquivo = nomeArquivo;
+        this.aluno = aluno;
+        this.dataEmissao = dataEmissao;
+        this.dataVencimento = dataVencimento;
+        this.textoPrincipal = textoPrincipal;
+        this.arquivoDisco = arquivoDisco;
+        this.anexo = anexo;
+        this.checkSum = checkSum;
+        this.tipoArquivo = tipoArquivo;
+    }
+
+    
+    
     public Documento() {
     }
 
@@ -118,7 +134,13 @@ public class Documento {
     public void setTipoArquivo(String tipoArquivo) {
         this.tipoArquivo = tipoArquivo;
     }
-    
-    
+
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
     
 }
