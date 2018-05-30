@@ -13,21 +13,19 @@ public class Aluno {
     private String nome;
     private String curso;
     private boolean ativo;
-    private String chekSUM;
     private int ano;
     private int semestre;
     private String numeroMatricula;
     private String senha;
     private String cpf;
-
+    
     public Aluno() {
     }
 
-    public Aluno(String nome, String curso, boolean ativo, String chekSUM, int ano, int semestre, String numeroMatricula,String senha,String cpf) {
+    public Aluno(String nome, String curso, boolean ativo, int ano, int semestre, String numeroMatricula,String senha,String cpf) {
         this.nome = nome;
         this.curso = curso;
         this.ativo = ativo;
-        this.chekSUM = chekSUM;
         this.ano = ano;
         this.semestre = semestre;
         this.numeroMatricula = numeroMatricula;
@@ -57,14 +55,6 @@ public class Aluno {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
-    }
-
-    public String getChekSUM() {
-        return chekSUM;
-    }
-
-    public void setChekSUM(String chekSUM) {
-        this.chekSUM = chekSUM;
     }
 
     public int getAno() {
