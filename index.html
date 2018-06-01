@@ -13,14 +13,17 @@
             <img src="logo..." alt="logo...">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda veniam placeat officiis laudantium minima eligendi vel at maxime excepturi exercitationem sed perspiciatis enim et beatae, molestiae quidem ullam, qui incidunt!</p>
         </header> -->
-        <form>
-            <label for="">CPF:</label>
-            <input type="text" name="cpf"><br>
-            <label for="">Senha:</label>
-            <input type="password" name="senha"><br>
-            <input type="submit" value="Login">
-            <input type="submit" value="Cadastra-se">
+        <form name="certificacao">
+            <label for="cpf">CPF:</label>
+            <input type="text" name="cpf" id="cpf">
+            <div class="error cpf">CPF inválido!</div>
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="password">
+            <div class="error password">A senha deve ter no mínimo seis caracteres.</div>
+            <input type="submit" value="Login" id="login">
+            <input type="submit" value="Cadastra-se" id="cadastro">
         </form>
         <!-- <footer></footer> -->
+        <script src="./valida-cpf.js"></script>
     </body>
 </html>

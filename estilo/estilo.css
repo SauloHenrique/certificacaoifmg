@@ -1,16 +1,13 @@
 body {
     background-image: url("../imagem/campusifmg.jpg");
-    /* temporariamente desnecessários devido ao background-size: cover */
-        /* background-repeat: no-repeat; */
-        /* background-attachment: fixed; */
     background-position: center;
-    background-size: cover; /* temporário | melhorar vizualização */
+    background-size: cover;
     /* posicionamento do form */
     display: grid;
     min-height: 100vh;
     justify-content: flex-end;
     align-content: center;
-    margin: 0; /* temporário | importar base? */
+    margin: 0;
 }
 
 /* Formulário: */
@@ -26,6 +23,7 @@ form {
 }
 
 label {
+    display: block;
     font-size: 24px;
     color: hsl(0, 0%, 100%);
 }
@@ -35,7 +33,7 @@ input[type="password"] {
     font-size: 18px;
     padding: 8px;
     display: block;
-    border: none;
+    border: 1px solid transparent;
     border-radius: var(--arredondamento-bordas);
     width: calc(var(--tamanho-caixa) - 48px);
 }
@@ -59,6 +57,45 @@ input[type="submit"] {
 input[type="submit"]:hover{
     background-color:hsl(0, 4%, 9%);
     transition: background-color 0.2s ease-in-out;
+}
+
+input[type="submit"]:disabled {
+    cursor: not-allowed;
+    opacity:0.3;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+input[type="text"]:valid,
+input[type="password"]:valid,
+.valid {
+    border: 1px solid rgb(0, 71, 0);
+}
+
+input[type="text"]:invalid,
+input[type="password"]:invalid,
+.invalid {
+    /* background-color: red; */
+    border: 1px solid hsl(0, 38%, 41%);
+    box-shadow: 0 8px 8px 0 hsla(0, 38%, 41%, 0.36);
+    background-color: hsl(351, 100%, 94%);
+}
+
+div.error {
+    padding: 4px;
+    margin: 0.1em;
+    border-radius: var(--arredondamento-bordas);
+    color: hsl(0, 0%, 100%);
+    text-align: right;
+    background-color: hsla(0, 75%, 40%, .7);
+}
+
+div.error.cpf {
+    visibility: hidden;
+}
+
+div.error.password {
+    visibility: hidden;
 }
 
 @media (max-width: 520px) {
