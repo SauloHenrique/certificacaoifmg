@@ -44,22 +44,17 @@ function validaCPF(cpf) {
         Number.parseInt(cpf) == 0 ||
         cpf.length > 11) {
         return false;
-    } else if (verificaPrimeiroDigito(cpf) && verificaSegundoDigito(cpf)) {
+    } else if (verificarDigitos(cpf, 9) && verificarDigitos(cpf, 10)) {
         return true;
     } else {
         return false;
     }
 }
 
-function verificarDigitos(n) {
-    return (cpf) => {
-        let resto = resta(incrementaNumeros(cpf, n));
-        return validacao(resto, cpf, n);
-    }
+function verificarDigitos(cpf, n) {
+    let resto = resta(incrementaNumeros(cpf, n));
+    return validacao(resto, cpf, n);
 }
-
-let verificaPrimeiroDigito = verificarDigitos(9);
-let verificaSegundoDigito = verificarDigitos(10);
 
 function incrementaNumeros(cpf, n) {
     let soma = 0;
